@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>arrow-up-circle.svg</file>
+        <file>trash.svg</file>
+        <file>type-bold.svg</file>
+        <file>type-strikethrough.svg</file>
+        <file>type-underline.svg</file>
+        <file>search.svg</file>
+        <file>x-lg.svg</file>
+        <file>plus-lg.svg</file>
+        <file>icon.png</file>
+    </qresource>
+</RCC>
