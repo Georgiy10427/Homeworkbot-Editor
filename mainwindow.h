@@ -25,12 +25,19 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+
     map <int, string, greater<int>> get_notes();
+
     int addNote(string body);
+
     void deleteNote(int id);
+
     void create_sidebar_buttons(map <int, string, greater<int>> notes);
+
     void create_sidebar_button(QString label, int id, int index=-1);
+
     void showNote(int id);
+
     ~MainWindow();
 
 private slots:
@@ -51,6 +58,8 @@ private slots:
     void on_underline_clicked();
 
     void on_strikethrough_clicked();
+
+    void closeEvent (QCloseEvent *event);
 
 private:
     Ui::MainWindow *ui;

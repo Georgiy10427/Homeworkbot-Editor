@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QCloseEvent>
 
 QString article_sidebar_button_style = \
             "height: 23px; margin: 2px; border-radius: 3px; background-color: #2e2f30; "\
@@ -422,4 +423,52 @@ void MainWindow::on_strikethrough_clicked()
     format.setFontStrikeOut(!cursor.charFormat().fontStrikeOut());
     cursor.mergeCharFormat(format);
     ui->textEdit->mergeCurrentCharFormat(format);
+}
+
+
+void MainWindow::closeEvent (QCloseEvent *event)
+{
+    if(currentNoteId == -1 and ui->textEdit->toPlainText() == "") event->accept();
+    else if(currentNoteId == -1 and ui->textEdit->toPlainText() != "")
+    {
+        int ret = QMessageBox::warning(this, "Предупреждение", "Сохранить запись?",
+                                       QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
+                                       QMessageBox::Cancel);
+        switch(ret)
+        {
+            case QMessageBox::Yes:
+                addNote(ui->textEdit->toPlainText().toStdString());
+                event->accept();
+                break;
+
+            case QMessageBox::No:
+                event->accept();
+                break;
+
+            case QMessageBox::Cancel:
+                event->ignore();
+                break;
+        }
+    }
+    else if(get_note(currentNoteId) != ui->textEdit->toPlainText().toStdString())
+    {
+        int ret = QMessageBox::warning(this, "Предупреждение", "Сохранить запись?",
+                                       QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel,
+                                       QMessageBox::Cancel);
+        switch(ret)
+        {
+            case QMessageBox::Yes:
+                editNote(currentNoteId, ui->textEdit->toPlainText().toStdString());
+                event->accept();
+                break;
+
+            case QMessageBox::No:
+                event->accept();
+                break;
+
+            case QMessageBox::Cancel:
+                event->ignore();
+                break;
+        }
+    }
 }
